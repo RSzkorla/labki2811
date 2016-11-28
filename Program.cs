@@ -8,12 +8,11 @@ namespace labki2811
 {
   class Bisekcja
   {
-    public double A { get; set; }
-    public double B { get; set; }
-    public double eps { get; set; }
-    public delegate double DelegatFuncj(double x);
+    private double A { get; set; }
+    private double B { get; set; }
+    private double eps { get; set; }
 
-    public DelegatFuncj F { get; set; }
+    public Func<double,double> F { get; set; }
 
     public Bisekcja(double a, double b, DelegatFuncj f , double e = 1e-9)
     {
