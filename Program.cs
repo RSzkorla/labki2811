@@ -37,7 +37,7 @@ namespace labki2811
 
         x0 = mid;
 
-        if (F(mid) < eps)
+        if (Math.Abs(F(mid)) < eps)
         {
           x0 = mid;
           break;
@@ -51,7 +51,7 @@ namespace labki2811
         {
           _a = mid;
         }
-      } while (Math.Abs(_a- _b)< eps);
+      } while (Math.Abs(_a- _b)> eps);
       return x0;
     }
 
@@ -64,9 +64,9 @@ namespace labki2811
     
     static void Main(string[] args)
     {
-      Bisekcja kont = new Bisekcja((2/3f)*Math.PI, (3/2f)*);
-
-
+      Bisekcja kont = new Bisekcja((2/3f)*Math.PI, (3/2f)*Math.PI,1e-10);
+      kont.F = Math.Sin;
+      Console.WriteLine(kont.Solve());
     }
   }
 }
