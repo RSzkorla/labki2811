@@ -12,10 +12,24 @@ namespace labki2811
   class Program
   {
 
+    public static IEnumerable<dynamic> GetGroupedCustomers(IEnumerable<Customer> r) 
+      => r
+      .GroupBy(x => x.Country)
+      .Select(x => new
+        {
+        Country = x.Key,
+        Customers = x
+          .Select(y => y)
+          .OrderBy(y => y.Name)
+        })
+      .OrderBy(x=>x.Country);
+    
+    public static IEnumerable<string> GetCountries(IEnumerable<Customer> r)
+      => r.Select(x => x.Country).Distinct();
+
     public static IEnumerable<Customer> GetTop3Customers(IEnumerable<Customer> r)
-    {
-      return r.OrderByDescending(x => x.Orders.Sum(y => y.Total)).Take(3);
-    }
+      => r.OrderByDescending(x => x.Orders.Sum(y => y.Total)).Take(3);
+
     public static IEnumerable<Model.Customer> GetCustomersFromBerlin(IEnumerable<Model.Customer> r) 
       => r.Where(x => x.City == "Berlin");
     
@@ -28,9 +42,20 @@ namespace labki2811
 
       var top3customers = GetTop3Customers(customers);
 
-      foreach (var item in top3customers)
+      var coutries = GetCountries(customers).OrderBy(x=> x);
+
+      var customersColection = GetGroupedCustomers(customers);
+
+      var cus = GetGroupedCustomers(customers);
+    
+      
+      foreach (var item in cus)
       {
-        Console.WriteLine($"{item.Name} : {item.Orders.Sum(y => y.Total)}");
+        Console.WriteLine(item.Country);
+        foreach (var customer in item.Customers)
+        {
+          Console.WriteLine($"  -{customer.Name}");
+        }
       }
     }
   }
