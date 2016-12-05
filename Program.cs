@@ -16,7 +16,9 @@ namespace labki2811
     {
       ICustomerRepository repo = new XMLCustomerRepository();
 
-      var customers = repo.GetAll();
+      var customers = repo.GetAll()
+        .Where(x=>x.City == "Berlin")
+        .OrderBy(x=> x.Name);
 
       foreach (var item in customers)
       {
